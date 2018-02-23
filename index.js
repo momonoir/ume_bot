@@ -57,7 +57,7 @@ function alarmClockTweet() {
 }
 
 const cronJob1 = new cron({
-    cronTime: '00 00 9-18 * * *', // 9時から18時まで1時間ごとに実行
+    cronTime: '00 00 9-20 * * *', // 9時から18時まで1時間ごとに実行
     start: true, // newした後即時実行するかどうか
     onTick: function() {
         postTweet();
