@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-// 環境変数から Titter アプリケーションのキー等を取得
+// 環境変数から Twitter アプリケーションのキー等を取得
 const options = {
   key: process.env.TWITTER_API_CONSUMER_KEY,
   secret: process.env.TWITTER_API_CONSUMER_SECRET,
@@ -12,6 +12,7 @@ const options = {
 app.set('options', options);
 
 app.set('port', (process.env.PORT || 8000));
+app.use(express.static('public'));
 
 app.get('/', function(request, response) {
   response.send('This is Twitter-bot application.')

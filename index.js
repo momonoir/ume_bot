@@ -4,6 +4,17 @@ const Twitter = require('twitter');
 const cron = require('cron').CronJob;
 const moment = require('moment');
 
+const useMoment = {
+  date: function() {
+    let date = moment().utc().add(9, 'h').format('YYYY/MM/DD HH:mm');
+    return date;
+  },
+  time: function() {
+    let time = moment().utc().add(9, 'h').format('HH時mm分');
+    return time;
+  }
+}
+
 const client = new Twitter({
   consumer_key: app.get('options').key,
   consumer_secret: app.get('options').secret,
@@ -16,9 +27,12 @@ process.on('unhandledRejection', console.dir);
 
 const headerMessage = '[うめbot] ';
 
+
+
 //bot起動時のツイート
 function firstTweet() {
-  let date = moment().utc().add(9, 'h').format('YYYY/MM/DD HH:mm');
+  // date = moment().utc().add(9, 'h').format('YYYY/MM/DD HH:mm');
+  let date = useMoment.date();
   client.post('statuses/update', {status: headerMessage + '起動したよ' + ' (' + date + ')'
   })
   .then((tweet) => {
@@ -31,7 +45,8 @@ function firstTweet() {
 
 //時報ツイートを投稿
 function postTweet() {
-  let time = moment().utc().add(9, 'h').format('HH時mm分');
+  //let time = moment().utc().add(9, 'h').format('HH時mm分');
+  let time = useMoment.time();
   client.post('statuses/update', {status: headerMessage + 'じほー：' + time + 'をお知らせしまーす'
   })
   .then((tweet) => {
@@ -44,7 +59,8 @@ function postTweet() {
 
 //こうめ本垢へアラームツイートをする
 function alarmClockTweet() {
-  let time = moment().utc().add(9, 'h').format('HH時mm分')
+  //let time = moment().utc().add(9, 'h').format('HH時mm分')
+  let time = useMoment.time();
   const alarmClockMessage = '@umeume888 ' + headerMessage + time +'ですよー';
   client.post('statuses/update', {status: alarmClockMessage
   })
